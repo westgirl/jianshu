@@ -1,9 +1,16 @@
-import React from 'react';
+import React ,{ Fragment } from 'react';
 import Header from './common/header'
+import { Styled } from './style.js';
+import { GlobalStyled } from './statics/iconfont/iconfont';
 
 function App() {
   return (
-    <Header />
+    <Fragment>
+        <Styled />
+        <GlobalStyled />
+        <Header />
+    </Fragment>
+    
   );
 }
 

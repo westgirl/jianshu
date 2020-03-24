@@ -15,6 +15,7 @@ export const HeaderWrapper = styled.div`
 export const Logo = styled.a.attrs({
   href:'/'
 })`
+  float:left;
   display:inline-block;
   height:56px;
   width:100px;
@@ -22,9 +23,10 @@ export const Logo = styled.a.attrs({
   background-size:cover;
 `
 export const Nav = styled.div`
-  display:inline-block;
-  width:1000px;
-  margin-left:50px;
+  margin-left:90px;
+  margin-right:230px;
+  overflow:hidden;
+  padding:0 50px;
 `
 export const NavItem = styled.div`
   height:56px;
@@ -40,12 +42,35 @@ export const NavItem = styled.div`
     color: #ea6f5a;
   }
 `;
+export const SearchWrapper = styled.div`
+  position:relative;
+  float:left;
+  .searchIcon{
+    position:absolute;
+    top:18px;
+    right:10px;
+  }
+  .slide-enter{
+    transition:all 0.5s ease;
+  }
+  .slide-enter-active{
+    width:240px;
+  }
+  .slide-exit{
+    transition:all 0.5s ease;
+  }
+  .slide-exit-active{
+    width:160px;
+  }
+`
+
 export const NavSearch = styled.input.attrs({
   placeholder:'搜索'
 })`
   display:inline-block;
   float:left;
   margin-top:9px;
+  margin-left:20px;
   width:160px;
   height:38px;
   outline:0;
@@ -57,19 +82,21 @@ export const NavSearch = styled.input.attrs({
   &::placeholder{
     color:red;
   }
+  &.focused{
+    width:240px;
+  }
 `;
 export const Attention = styled.div`
   float:right;
-  margin-right:120px;
   height:56px;
   line-height:56px;
 `
 export const Button = styled.div`
   display:inline-block;
   width: 80px;
-  height: 38px;
-  height:38px;
-  line-height:38px;
+  height: 32px;
+  line-height:32px;
+  text-align:center;
   margin-right:25px;
   border-radius:20px;
   font-size:15px;
@@ -78,5 +105,10 @@ export const Button = styled.div`
     border-radius: 20px;
     font-size: 15px;
     color: #ea6f5a;
+  }
+  &.wht{
+    font-size: 14px;
+    color: #fff;
+    background-color: #ea6f5a;
   }
 ` 
