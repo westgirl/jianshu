@@ -1,26 +1,28 @@
 import React ,{ Component  } from 'react';
-import { HeaderContainer ,HeaderWrapper ,Logo,Nav,NavItem ,SearchWrapper,NavSearch,Attention,Button} from './style';
+import { HeaderContainer ,HeaderWrapper ,Logo,Nav,NavItem ,SearchWrapper,NavSearch,Attention,Button,SearchInfo,SearchInfoItem} from './style';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
+import { getList } from './store/actionCreator';
 
 class Header extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-           focused:false
-        }
-        this.searchFocus = this.searchFocus.bind(this)
-        this.searchBlur = this.searchBlur.bind(this)
-    }
-    searchFocus(){
-        this.setState({
-            focused:true
-        })
-    }
-    searchBlur(){
-        this.setState({
-            focused:false
-        })
-    }
+    // constructor(props){
+    //     super(props)
+    //     this.state = {
+    //        focused:false
+    //     }
+    //     this.searchFocus = this.searchFocus.bind(this)
+    //     this.searchBlur = this.searchBlur.bind(this)
+    // }
+    // searchFocus(){
+    //     this.setState({
+    //         focused:true
+    //     })
+    // }
+    // searchBlur(){
+    //     this.setState({
+    //         focused:false
+    //     })
+    // }
     render(){
         return (
             <HeaderContainer>
@@ -37,17 +39,18 @@ class Header extends Component {
                        <NavItem className="left">下载</NavItem>
                         <SearchWrapper>
                             <CSSTransition
-                             in={this.state.focused}
+                             in={this.props.focused}
                              timeout={200}
                              classNames="slide"
                            >
-                                <NavSearch  className={this.state.focused ? 'left focused' :'left'} 
-                                    onFocus = {this.searchFocus} 
-                                    onBlur = {this.searchBlur}
+                                <NavSearch  className={this.props.focused ? 'left focused' :'left'} 
+                                    onFocus = {this.props.searchFocus} 
+                                    onBlur = {this.props.searchBlur}
                                 ></NavSearch>
-                       </CSSTransition>
-                       <span className="iconfont searchIcon">&#xe62b;</span>
-                            </SearchWrapper>
+                            </CSSTransition>
+                            <span className="iconfont searchIcon">&#xe62b;</span>
+                            {this.getListArea()}
+                        </SearchWrapper>
                        
                        <NavItem className="right">登录</NavItem>
                        <NavItem className="right">Aa</NavItem>
@@ -56,5 +59,47 @@ class Header extends Component {
             </HeaderContainer>
         )
     }
+    getListArea(){
+        if(this.props.focused){ 
+            return (
+                <SearchInfo >
+                    {
+                        this.props.list.map(item=>{
+                            return <SearchInfoItem key={item}>{item}</SearchInfoItem>
+                        })
+                    }
+                </SearchInfo>
+            )
+        }else{
+            return null;
+        }
+    }
 }
-export default Header;
+
+
+
+const mapStateToProps = (state)=>{
+        return {
+            focused:state.header.focused,
+            list:state.header.list
+        }
+}
+const mapDispachToProps = (dispatch)=>{
+        return {
+            searchFocus(){
+                const action = {
+                    type:'search_focus',
+                }
+                dispatch(action)
+                dispatch(getList())
+            },
+            searchBlur(){                
+                const action = {
+                    type:'search_blur',
+                }
+                dispatch(action)
+            }
+        }
+}
+
+export default connect(mapStateToProps,mapDispachToProps)(Header);

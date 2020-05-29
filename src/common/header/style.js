@@ -25,7 +25,7 @@ export const Logo = styled.a.attrs({
 export const Nav = styled.div`
   margin-left:90px;
   margin-right:230px;
-  overflow:hidden;
+  // overflow:hidden;
   padding:0 50px;
 `
 export const NavItem = styled.div`
@@ -54,13 +54,13 @@ export const SearchWrapper = styled.div`
     transition:all 0.5s ease;
   }
   .slide-enter-active{
-    width:240px;
+    width:320px;
   }
   .slide-exit{
     transition:all 0.5s ease;
   }
   .slide-exit-active{
-    width:160px;
+    width:240px;
   }
 `
 
@@ -71,7 +71,7 @@ export const NavSearch = styled.input.attrs({
   float:left;
   margin-top:9px;
   margin-left:20px;
-  width:160px;
+  width:240px;
   height:38px;
   outline:0;
   border:none;
@@ -83,7 +83,7 @@ export const NavSearch = styled.input.attrs({
     color:red;
   }
   &.focused{
-    width:240px;
+    width:320px;
   }
 `;
 export const Attention = styled.div`
@@ -112,3 +112,21 @@ export const Button = styled.div`
     background-color: #ea6f5a;
   }
 ` 
+export const SearchInfo = styled.div`
+  position:absolute;
+  top:56px;
+  left:20px;
+  right:0;
+  height:140px;
+  background:#fff;
+  z-index:10;
+  border:1px solid #e3e3e3;
+  width: 250px;
+  border-radius: 4px;
+  padding: 15px 20px;
+`
+export const SearchInfoItem = styled.div`
+  display:inline-block;
+  float:left;
+  margin-right: 15px;
+`
