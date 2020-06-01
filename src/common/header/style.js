@@ -130,3 +130,13 @@ export const SearchInfoItem = styled.div`
   float:left;
   margin-right: 15px;
 `
+export const SearchTitle = styled.div`
+
+`
+export const SearchSwitch = styled.div`
+   display:inline-block;
+   float:right;
+`
+export const SearchList = styled.div`
+   overflow:hidden;
+`

@@ -1,28 +1,12 @@
 import React ,{ Component  } from 'react';
-import { HeaderContainer ,HeaderWrapper ,Logo,Nav,NavItem ,SearchWrapper,NavSearch,Attention,Button,SearchInfo,SearchInfoItem} from './style';
+import { HeaderContainer ,HeaderWrapper ,Logo,Nav,NavItem ,SearchWrapper,NavSearch,Attention,
+    Button,SearchInfo,SearchInfoItem,SearchTitle,SearchSwitch,SearchList} from './style';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getList } from './store/actionCreator';
+import { getList ,changePage,mouseEnter,mouseLeave } from './store/actionCreator';
 
 class Header extends Component {
-    // constructor(props){
-    //     super(props)
-    //     this.state = {
-    //        focused:false
-    //     }
-    //     this.searchFocus = this.searchFocus.bind(this)
-    //     this.searchBlur = this.searchBlur.bind(this)
-    // }
-    // searchFocus(){
-    //     this.setState({
-    //         focused:true
-    //     })
-    // }
-    // searchBlur(){
-    //     this.setState({
-    //         focused:false
-    //     })
-    // }
+    
     render(){
         return (
             <HeaderContainer>
@@ -51,7 +35,6 @@ class Header extends Component {
                             <span className="iconfont searchIcon">&#xe62b;</span>
                             {this.getListArea()}
                         </SearchWrapper>
-                       
                        <NavItem className="right">登录</NavItem>
                        <NavItem className="right">Aa</NavItem>
                     </Nav>
@@ -60,14 +43,25 @@ class Header extends Component {
         )
     }
     getListArea(){
-        if(this.props.focused){ 
+        const { list ,page ,totalPage ,mouseIn,handleChangePage,mouseEnter,mouseLeave } = this.props
+        let pageList = []
+        if(list.length){
+            for (let i = (page-1)*10; i < page*10; i++) {
+                pageList.push(
+                    <SearchInfoItem key={list[i]}>{list[i]}</SearchInfoItem>
+                )
+            }
+        }
+        
+        if(this.props.focused || mouseIn){ 
             return (
-                <SearchInfo >
-                    {
-                        this.props.list.map(item=>{
-                            return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                        })
-                    }
+                <SearchInfo onMouseEnter={ mouseEnter } onMouseLeave={ mouseLeave } >
+                    <SearchTitle>热门搜索
+                        <SearchSwitch onClick={ ()=>{ handleChangePage(page,totalPage) } }>换一批</SearchSwitch>
+                    </SearchTitle>
+                    <SearchList>
+                    { pageList }
+                    </SearchList>
                 </SearchInfo>
             )
         }else{
@@ -81,7 +75,10 @@ class Header extends Component {
 const mapStateToProps = (state)=>{
         return {
             focused:state.header.focused,
-            list:state.header.list
+            list:state.header.list,
+            page:state.header.page,
+            totalPage:state.header.totalPage,
+            mouseIn:state.header.mouseIn
         }
 }
 const mapDispachToProps = (dispatch)=>{
@@ -98,6 +95,21 @@ const mapDispachToProps = (dispatch)=>{
                     type:'search_blur',
                 }
                 dispatch(action)
+            },
+            handleChangePage(page,totalPage){
+                if(page >= totalPage){
+                    page = 1
+                }else{
+                    page++
+                }
+                dispatch(changePage(page))
+            },
+            mouseEnter(){
+                dispatch(mouseEnter())
+            },
+            mouseLeave(){
+                dispatch(mouseLeave())
+                
             }
         }
 }
