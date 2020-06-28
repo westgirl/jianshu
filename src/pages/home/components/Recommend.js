@@ -7,7 +7,7 @@ class Recommend extends React.Component {
       return <div>
                 {
                   this.props.recommenList.map((item)=>{
-                    return <RecommendItem key={item.id} imgUrl={ item.imgUrl }></RecommendItem>
+                    return <RecommendItem key={item.get('id')} imgUrl={ item.get('imgUrl') }></RecommendItem>
                   })
                 }
              </div>
@@ -16,7 +16,7 @@ class Recommend extends React.Component {
 
 const mapState = (state)=>{
   return {
-      recommenList :state.home.recommenList
+      recommenList :state.get('home').get('recommenList')
   }
 }
 export default connect(mapState,null)(Recommend);

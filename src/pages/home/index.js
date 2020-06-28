@@ -1,13 +1,16 @@
 import React from 'react';
-import { HomeWrapper, HomeLeft,HomeRight} from './style';
+import { HomeWrapper, HomeLeft,HomeRight,BackTop} from './style';
 import List from './components/List'
 import Recommend from './components/Recommend'
 import Writter from './components/Writter'
-import axios from 'axios'
+// import axios from 'axios'
 import { connect } from 'react-redux'
+import { getHomeInfo ,toggleScrolShow } from './store/actionCreators'
 
-class Home extends React.Component{
+class Home extends React.PureComponent{
     render(){
+        console.log('home-render');
+        
         return <div>
             <HomeWrapper>
                 <HomeLeft>
@@ -17,28 +20,46 @@ class Home extends React.Component{
                     <Recommend></Recommend>
                     <Writter></Writter>
                 </HomeRight>
+                { this.props.scrollShow ? (<BackTop onClick={this.backTop}>回到顶部</BackTop> ): null }
             </HomeWrapper>
         </div>
     }
-
+    
     componentDidMount(){
-        axios.get('/api/home.json').then(res=>{
-            console.log(res);
-            let action = {
-                type:'change_home_data',
-                data:res.data.data
-            }
-            this.props.changeHomeData(action)
-        })
+        console.log('123');
+        
+        this.props.changeHomeData()
+        this.bindEvent()
     }
+    bindEvent(){
+        window.addEventListener('scroll',this.props.windowScroll)
+    }
+    backTop(){
+        window.scrollTo(0,0)
+    }
+
 }
 
+const mapState = (state)=>{
+    return {
+        // scrollShow:state.get('home').get('scrollShow')
+        scrollShow:false
+    }
+}
 const mapDispatch = (dispatch)=>{
     return {
-        changeHomeData(action){
-            dispatch(action)
+        changeHomeData(){
+            dispatch(getHomeInfo())
+        },
+        windowScroll(){
+            // console.log(document.documentElement.scrollTop);
+            if(document.documentElement.scrollTop>400){
+                dispatch(toggleScrolShow(true))
+            }else{
+                dispatch(toggleScrolShow(false))
+            }
         }
     }
 }
 
-export default connect(null,mapDispatch)(Home);
+export default connect(mapState,mapDispatch)(Home);

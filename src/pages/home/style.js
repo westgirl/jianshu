@@ -48,6 +48,29 @@ export const RecommendItem = styled.div`
    background-size:contain;
 `
 
+export const LoadMore = styled.div`
+   margin-top:10px;
+   height:50px;
+   line-height:50px;
+   background:lightgray;
+   color:#000;
+   text-align:center;
+   border-radius:5px;
+   cursor:pointer;
+`
+export const BackTop = styled.div`
+   position:fixed;
+   right:100px;
+   bottom:100px;
+   width:100px;
+   height:100px;
+   text-align:center;
+   line-height:100px;
+   z-index:100;
+   background:gray;
+   color:#000;
+`
+
 
 
 

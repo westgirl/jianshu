@@ -9,7 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 import Home from './pages/home'
-import Detail from './pages/detail'
+import Detail from './pages/detail/loadable'
 
 
 
@@ -24,7 +24,7 @@ function App() {
               <Header />
               <div>
                 <Route path='/' component={Home} exact></Route>
-                <Route path='/detail' component={Detail} exact></Route>
+                <Route path='/detail/:id' component={Detail} exact></Route>
               </div>
           </Provider>
         </div>
